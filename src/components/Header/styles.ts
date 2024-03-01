@@ -5,7 +5,7 @@ export const NavWrapper = styled.nav`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 70px;
+  height: 5rem;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadow.card};
 
