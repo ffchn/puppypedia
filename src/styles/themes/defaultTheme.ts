@@ -9,7 +9,7 @@ const defaultTheme = {
     'gray-600': '#323238',
     'gray-700': '#29292E',
 
-    'orange-300': '#FF6040',
+    'orange-300': '#FF7F00',
     'orange-500': '#F32B09',
     'orange-700': '#A31707',
 

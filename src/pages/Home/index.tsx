@@ -1,3 +1,12 @@
+import BreedFilterMenu from '../../components/BreedFilterMenu'
+import PhotoGrid from '../../components/PhotoGrid'
+import { HomeWrapper } from './styles'
+
 export default function Home() {
-  return <h1>home!</h1>
+  return (
+    <HomeWrapper>
+      <BreedFilterMenu />
+      <PhotoGrid />
+    </HomeWrapper>
+  )
 }
