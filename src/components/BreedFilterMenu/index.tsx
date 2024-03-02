@@ -1,12 +1,34 @@
+import { X } from 'phosphor-react'
 import { Button } from '../Button'
+import { BreedFilterItemWrapper, BreedFilterMenuWrapper } from './styles'
 
-export default function BreedFilterMenu() {
+interface BreedFilterItemProps {
+  breedName: string
+}
+
+interface BreedsFilterMenuProps {
+  breedsList: Array<any> // todo: fix this later
+}
+
+function BreedFilterItem({ breedName }: BreedFilterItemProps) {
   return (
-    <div>
-      <Button type="button">Manage Breeds</Button>
-      <span>Corgi</span>
-      <span>Corgi</span>
-      <span>Corgi</span>
-    </div>
+    <BreedFilterItemWrapper>
+      <span className="breed">{breedName}</span>
+      <X size={16} weight="bold" />
+    </BreedFilterItemWrapper>
+  )
+}
+
+export default function BreedFilterMenu({ breedsList }: BreedsFilterMenuProps) {
+  console.log(breedsList)
+  return (
+    <BreedFilterMenuWrapper>
+      <Button type="button" className="filterButton">
+        Manage Breeds
+      </Button>
+      <BreedFilterItem breedName="corgi" />
+      <BreedFilterItem breedName="schnauzer" />
+      <BreedFilterItem breedName="daschound" />
+    </BreedFilterMenuWrapper>
   )
 }

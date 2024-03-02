@@ -24,6 +24,7 @@ export default function PhotoGrid() {
       <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
       <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
       <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
+      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
     </PhotoGridWrapper>
   )
 }

@@ -11,7 +11,7 @@ const defaultTheme = {
 
     'orange-300': '#FF7F00',
     'orange-500': '#F32B09',
-    'orange-700': '#A31707',
+    'orange-700': '#B81D00',
 
     'yellow-500': '#FF9309',
   },

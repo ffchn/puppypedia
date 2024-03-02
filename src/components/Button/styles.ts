@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { ButtonProps } from './index'
+import type { ButtonProps } from './index'
 
 export const ButtonWrapper = styled.button<ButtonProps>`
   border: 0;

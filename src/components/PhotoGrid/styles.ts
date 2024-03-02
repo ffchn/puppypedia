@@ -7,7 +7,6 @@ export const PhotoGridWrapper = styled.div`
 `
 
 export const PhotoGridItemWraper = styled.div`
-  /* width: 12.5rem; */
   height: 12.5rem;
   background: ${({ theme }) => theme.colors['gray-100']};
   border-radius: 8px;
@@ -17,6 +16,6 @@ export const PhotoGridItemWraper = styled.div`
   overflow: hidden;
 
   img {
-    max-height: 100%;
+    max-height: 12.5rem;
   }
 `
