@@ -12,7 +12,8 @@ export const BreedFilterItemWrapper = styled.span<BreedFilterItemWrapperProps>`
   align-items: center;
   justify-content: space-between;
   background: ${({ theme }) => theme.colors['gray-100']};
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.25rem;
   cursor: pointer;
   transition-duration: 0.5s;
   font-weight: bold;

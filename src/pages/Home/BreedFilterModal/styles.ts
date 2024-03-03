@@ -1,13 +1,14 @@
 import styled from 'styled-components'
 
 export const BreedFilterModalContent = styled.div`
-  width: 20rem;
+  width: 25rem;
 
   h2 {
     margin-bottom: 1rem;
   }
 
-  h3 {
+  h3,
+  h5 {
     margin-bottom: 0.5rem;
   }
 
@@ -26,6 +27,16 @@ export const BreedFilterModalContent = styled.div`
       }
     }
   }
+
+  .searchResults {
+    min-height: 2rem;
+  }
+
+  .resultsListWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
 `
 
 export const BreedSearchInput = styled.input`
@@ -36,5 +47,15 @@ export const BreedSearchInput = styled.input`
   border: none;
   padding: 0.5rem;
   text-indent: 0.5rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors['gray-600']};
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.colors['gray-400']};
+`
+
+export const BreedSearchNotFound = styled.div`
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 10px;
+  }
 `
