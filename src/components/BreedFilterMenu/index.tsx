@@ -7,7 +7,7 @@ interface BreedFilterItemProps {
 }
 
 interface BreedsFilterMenuProps {
-  breedsList: Array<any> // todo: fix this later
+  breedsList: Object | null // todo: fix this later
 }
 
 function BreedFilterItem({ breedName }: BreedFilterItemProps) {
@@ -19,10 +19,14 @@ function BreedFilterItem({ breedName }: BreedFilterItemProps) {
   )
 }
 
+// export default function BreedFilterMenu({ breedsList }: BreedsFilterMenuProps) {
 export default function BreedFilterMenu({ breedsList }: BreedsFilterMenuProps) {
-  console.log(breedsList)
+  console.log('breedslist', breedsList)
   return (
     <BreedFilterMenuWrapper>
+      {/* {breedsList.map((breed) => (
+        <BreedFilterItem breedName={breed} />
+      ))} */}
       <Button type="button" className="filterButton">
         Manage Breeds
       </Button>

@@ -1,30 +1,39 @@
-import { PhotoGridItemWraper, PhotoGridWrapper } from './styles'
+import { PawPrint } from 'phosphor-react'
+import {
+  PhotoGridEmptyStateWrapper,
+  PhotoGridItemWraper,
+  PhotoGridWrapper,
+} from './styles'
+
+interface PhotoGridProps {
+  isFetching: boolean
+  breedsPhotoList: Array<string>
+}
 
 interface PhotoGridItemProps {
   src: string
 }
 
 function PhotoGridItem({ src }: PhotoGridItemProps) {
-  return (
-    <PhotoGridItemWraper>
-      <img src={src} alt="" />
-    </PhotoGridItemWraper>
-  )
+  return <PhotoGridItemWraper src={src} />
 }
 
-export default function PhotoGrid() {
-  return (
+export default function PhotoGrid({
+  isFetching,
+  breedsPhotoList,
+}: PhotoGridProps) {
+  return isFetching ? (
+    <PhotoGridEmptyStateWrapper>
+      <div className="emptyStateIcon">
+        <PawPrint size={64} />
+      </div>
+      <span className="emptyStateMessage">Fetch!-ing</span>
+    </PhotoGridEmptyStateWrapper>
+  ) : (
     <PhotoGridWrapper>
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
-      <PhotoGridItem src="https://images.dog.ceo/breeds/bulldog-french/n02108915_4500.jpg" />
+      {breedsPhotoList.map((item: string) => (
+        <PhotoGridItem src={item} />
+      ))}
     </PhotoGridWrapper>
   )
 }
