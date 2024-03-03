@@ -13,10 +13,8 @@ import { HomeContext } from './HomeContext'
 export default function Home() {
   const [breedsList, setBreedsList] = useState<BreedObject[]>([])
   const [isFetching, setIsFetching] = useState<boolean>(true)
-  const [breedFilterList, setBreedFilterList] = useState<string[]>([
-    'corgi',
-    'shiba',
-    'labrador',
+  const [breedFilterList, setBreedFilterList] = useState<BreedObject[]>([
+    { breed: 'corgi', subbreeds: [] },
   ])
   const [selectedBreedsPhotoList, setSelectedBreedsPhotoList] = useState<
     BreedPhotoItemObject[]
@@ -45,7 +43,7 @@ export default function Home() {
   }, [breedsList, breedFilterList])
 
   const memoizedContextValues = useMemo(() => {
-    function updateBreedsFilter(breedFilter: string[]) {
+    function updateBreedsFilter(breedFilter: BreedObject[]) {
       setBreedFilterList(breedFilter)
     }
 

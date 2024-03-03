@@ -4,6 +4,7 @@ import { BreedFilterMenuWrapper } from './styles'
 import BreedFilterModal from '../BreedFilterModal'
 import { BreedFilterItem } from '../BreedFilterItem'
 import { HomeContext } from '../HomeContext'
+import { BreedObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 
 export default function BreedFilterMenu() {
   const [isModalOpen, setModalOpen] = useState<boolean>(false)
@@ -13,8 +14,10 @@ export default function BreedFilterMenu() {
     setModalOpen(!isModalOpen)
   }
 
-  function removeFilter(breed: string) {
-    const updatedFilters = breedFilterList.filter((filter) => filter !== breed)
+  function removeFilter(breedFilterToRemove: BreedObject) {
+    const updatedFilters = breedFilterList.filter(
+      (filter) => filter.breed !== breedFilterToRemove.breed,
+    )
     updateBreedsFilter(updatedFilters)
   }
 
@@ -37,7 +40,7 @@ export default function BreedFilterMenu() {
             <BreedFilterItem
               type="remove"
               key={`filter-${breed}`}
-              breedName={breed}
+              breedData={breed}
               onClick={() => removeFilter(breed)}
             />
           ))}

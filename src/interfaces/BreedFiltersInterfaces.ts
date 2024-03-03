@@ -1,5 +1,7 @@
+import { BreedObject } from './BreedPhotoGridInterfaces'
+
 export interface BreedFilterItemProps {
-  breedName: string
-  onClick: (breed: string) => void
+  breedData: BreedObject
+  onClick: (breed: BreedObject) => void
   type: 'add' | 'remove'
 }

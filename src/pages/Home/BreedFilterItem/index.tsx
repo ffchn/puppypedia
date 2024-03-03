@@ -3,17 +3,17 @@ import { BreedFilterItemWrapper } from './styles'
 import { BreedFilterItemProps } from '../../../interfaces/BreedFiltersInterfaces'
 
 export function BreedFilterItem({
-  breedName,
+  breedData,
   onClick,
   type,
 }: BreedFilterItemProps) {
   function handleFilterItemCallback() {
-    onClick(breedName)
+    onClick(breedData)
   }
 
   return (
     <BreedFilterItemWrapper onClick={() => handleFilterItemCallback()}>
-      <span className="breed">{breedName}</span>
+      <span className="breed">{breedData.breed}</span>
       {type === 'add' ? (
         <Plus size={16} weight="bold" />
       ) : (

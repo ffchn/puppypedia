@@ -3,8 +3,8 @@ import { BreedObject } from '../../interfaces/BreedPhotoGridInterfaces'
 
 interface HomeContextType {
   breedsList: BreedObject[]
-  breedFilterList: string[]
-  updateBreedsFilter: (list: string[]) => void
+  breedFilterList: BreedObject[]
+  updateBreedsFilter: (filters: BreedObject[]) => void
 }
 
 export const HomeContext = createContext({} as HomeContextType)

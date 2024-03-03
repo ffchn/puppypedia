@@ -56,13 +56,13 @@ export const DogAPI = {
     }
   },
 
-  async fetchBreedListImages(breeds: string[]) {
+  async fetchBreedListImages(filters: BreedObject[]) {
     try {
       const promiseList = await Promise.all(
-        breeds.map((breed) => this.fetchBreedImageList(breed)),
+        filters.map((filter) => this.fetchBreedImageList(filter.breed)),
       )
 
-      return promiseList.flat() // todo separate breeds
+      return promiseList.flat()
     } catch (err) {
       if (err instanceof Error)
         console.error(`Error fetching breeds list: ${err.message}`)

@@ -16,6 +16,7 @@ import {
   BreedSearchNotFound,
 } from './styles'
 import { HomeContext } from '../HomeContext'
+import { BreedObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 
 export default function BreedFilterModal({
   isOpen,
@@ -25,7 +26,7 @@ export default function BreedFilterModal({
   const { breedsList, breedFilterList, updateBreedsFilter } =
     useContext(HomeContext)
 
-  const [selectedBreeds, setSelectedBreeds] = useState<string[]>([])
+  const [selectedBreeds, setSelectedBreeds] = useState<BreedObject[]>([])
 
   function searchFormSubmit(e: FormEvent) {
     e.preventDefault()
@@ -34,20 +35,22 @@ export default function BreedFilterModal({
   }
 
   useEffect(() => {
-    // updates pre-selected items in options list when filters deleted from home
+    // resets filters and input value when modal toggles
     setSelectedBreeds(breedFilterList)
+    setInputValue('')
   }, [breedFilterList, isOpen])
 
   const handleSelectBreedFilter = useCallback(
-    (selectedBreed: string) => {
-      if (selectedBreeds.indexOf(selectedBreed) === -1) {
+    (selectedBreed: BreedObject) => {
+      // checks in selectedBreeds state if filter isnt already present before pushing
+      if (!selectedBreeds.find((breed) => breed === selectedBreed)) {
         setSelectedBreeds((state) => [...state, selectedBreed])
       }
     },
     [selectedBreeds],
   )
 
-  const handleRemoveBreedFilter = useCallback((selectedBreed: string) => {
+  const handleRemoveBreedFilter = useCallback((selectedBreed: BreedObject) => {
     setSelectedBreeds((state) =>
       state.filter((breed) => breed !== selectedBreed),
     )
@@ -76,11 +79,11 @@ export default function BreedFilterModal({
         <h3>Selected</h3>
         <div className="selectedBreedOptions">
           {selectedBreeds.length ? (
-            selectedBreeds.map((breed: string) => (
+            selectedBreeds.map((breed: BreedObject) => (
               <BreedFilterItem
                 type="remove"
-                breedName={breed}
-                key={breed}
+                breedData={breed}
+                key={breed.breed}
                 onClick={handleRemoveBreedFilter}
               />
             ))
@@ -106,7 +109,7 @@ export default function BreedFilterModal({
                       <BreedFilterItem
                         type="add"
                         key={result.breed}
-                        breedName={result.breed}
+                        breedData={result}
                         onClick={handleSelectBreedFilter}
                       />
                     ))}
