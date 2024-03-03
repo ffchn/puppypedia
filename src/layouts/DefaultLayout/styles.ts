@@ -9,5 +9,5 @@ export const LayoutContainer = styled.div`
   padding: 2.5rem;
   border-radius: 8px;
   box-shadow: ${({ theme }) => theme.shadow.card};
-  min-height: 70vh;
+  min-height: 60vh;
 `

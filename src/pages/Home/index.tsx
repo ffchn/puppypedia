@@ -28,10 +28,6 @@ export default function Home() {
     setIsFetching(false)
   }
 
-  function updateBreedsFilter(breedFilter: string[]) {
-    setBreedFilterList(breedFilter)
-  }
-
   useEffect(() => {
     fetchBreedsListData()
   }, [])
@@ -49,9 +45,13 @@ export default function Home() {
   }, [breedsList, breedFilterList])
 
   const memoizedContextValues = useMemo(() => {
+    function updateBreedsFilter(breedFilter: string[]) {
+      setBreedFilterList(breedFilter)
+    }
+
     // memoized states so it doesnt re-render whole context when not necessary
     return { breedsList, breedFilterList, updateBreedsFilter }
-  }, [breedsList, breedFilterList, updateBreedsFilter])
+  }, [breedsList, breedFilterList])
 
   return (
     <HomeWrapper>

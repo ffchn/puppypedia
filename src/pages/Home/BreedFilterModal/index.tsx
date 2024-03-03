@@ -1,7 +1,4 @@
-import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { FormEvent, useCallback, useContext, useMemo, useState } from 'react'
 import { Dog } from 'phosphor-react'
 import { BreedFilterItem } from '../BreedFilterItem'
 import Modal, { ModalProps } from '../../../components/Modal'
@@ -13,45 +10,19 @@ import {
 } from './styles'
 import { HomeContext } from '../HomeContext'
 
-const breedSearchValidationSchema = zod.object({
-  breed: zod.string().min(3, 'Inform a breed'),
-})
-
-type BreedSearchFormData = zod.infer<typeof breedSearchValidationSchema>
-
 export default function BreedFilterModal({
   isOpen,
   closeModalCallback,
 }: ModalProps) {
-  const { breedsList } = useContext(HomeContext)
+  const [inputValue, setInputValue] = useState<string>('')
+  const { breedsList, updateBreedsFilter } = useContext(HomeContext)
 
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([])
-  /** https://www.react-hook-form.com/api/useform/
-   * register(name, {options})
-   * returns form input events ({onChange, onBlur, onFocus...})
-   *
-   * handleSubmit(function(data))
-   * Receives form data and event if validation passes
-   *
-   * watch(names?: string | string[])
-   * Observres changes to specified inputs and returns value
-   *
-   * reset()
-   * triggers form clearup to Default values set in options
-   */
-  const { register, handleSubmit, watch, reset } = useForm<BreedSearchFormData>(
-    {
-      resolver: zodResolver(breedSearchValidationSchema),
-      defaultValues: {
-        breed: '',
-      },
-    },
-  )
 
   function searchBreedsList(data: any) {
     // todo: fix this
+    updateBreedsFilter(data)
     console.log(data)
-    reset()
   }
 
   function handleCancel() {
@@ -62,10 +33,10 @@ export default function BreedFilterModal({
     (selectedBreed: string) => {
       if (selectedBreeds.indexOf(selectedBreed) === -1) {
         setSelectedBreeds((state) => [...state, selectedBreed])
-        reset()
+        setInputValue('')
       }
     },
-    [selectedBreeds, reset],
+    [selectedBreeds],
   )
 
   const handleRemoveBreedFilter = useCallback((selectedBreed: string) => {
@@ -74,17 +45,20 @@ export default function BreedFilterModal({
     )
   }, [])
 
-  const watchInputValue = watch('breed')
+  function handleChangeInput(e: FormEvent<HTMLInputElement>) {
+    setInputValue(e.currentTarget.value)
+  }
+
   const isSubmitDisabled = !selectedBreeds.length
 
   const resultsList = useMemo(() => {
-    if (watchInputValue.length < 3) return []
+    if (inputValue.length < 3) return []
     const searchResults = breedsList.filter(
-      (breedItem) => breedItem.breed.includes(watchInputValue.toLowerCase()), // gets items from breedlist that contain string from inputValue
+      (breedItem) => breedItem.breed.includes(inputValue.toLowerCase()), // gets items from breedlist that contain string from inputValue
     )
 
     return searchResults
-  }, [breedsList, watchInputValue])
+  }, [breedsList, inputValue])
 
   return (
     <Modal isOpen={isOpen} closeModalCallback={closeModalCallback}>
@@ -105,11 +79,15 @@ export default function BreedFilterModal({
             <span>Search breeds from input below</span>
           )}
         </div>
-        <form action="" onSubmit={handleSubmit(searchBreedsList)}>
+        <form action="" onSubmit={searchBreedsList}>
           <h3>Search for {selectedBreeds.length >= 1 && 'another '} breed:</h3>
-          <BreedSearchInput type="text" {...register('breed')} />
+          <BreedSearchInput
+            type="text"
+            onChange={(e) => handleChangeInput(e)}
+            value={inputValue}
+          />
           <div className="searchResults">
-            {watchInputValue.length >= 3 &&
+            {inputValue.length >= 3 &&
               (resultsList.length >= 1 ? (
                 <>
                   <h5>Breed search results:</h5>
@@ -130,7 +108,7 @@ export default function BreedFilterModal({
                   <Dog size={24} />{' '}
                   <span>
                     Oof! No results found for{' '}
-                    <strong>&quot;{watchInputValue}&quot;</strong>
+                    <strong>&quot;{inputValue}&quot;</strong>
                   </span>
                 </BreedSearchNotFound>
               ))}
@@ -143,7 +121,9 @@ export default function BreedFilterModal({
             >
               Cancel
             </Button>
-            <Button disabled={isSubmitDisabled}>Save</Button>
+            <Button disabled={isSubmitDisabled} type="submit">
+              Save
+            </Button>
           </div>
         </form>
       </BreedFilterModalContent>
