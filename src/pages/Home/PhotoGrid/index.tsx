@@ -4,7 +4,7 @@ import {
   PhotoGridItemWraper,
   PhotoGridWrapper,
 } from './styles'
-import { BreedPhotoItemObject } from '../../interfaces/BreedPhotoGridInterfaces'
+import { BreedPhotoItemObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 
 interface PhotoGridProps {
   isFetching: boolean
@@ -32,8 +32,9 @@ export default function PhotoGrid({
     </PhotoGridEmptyStateWrapper>
   ) : (
     <PhotoGridWrapper>
-      {breedsPhotoList.map((item: BreedPhotoItemObject) => (
-        <PhotoGridItem photoUrl={item.photoUrl} />
+      {breedsPhotoList.map((item: BreedPhotoItemObject, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <PhotoGridItem photoUrl={item.photoUrl} key={index} />
       ))}
     </PhotoGridWrapper>
   )

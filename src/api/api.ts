@@ -1,5 +1,8 @@
 import axios from 'axios'
-import { BreedPhotoItemObject } from '../interfaces/BreedPhotoGridInterfaces'
+import {
+  BreedObject,
+  BreedPhotoItemObject,
+} from '../interfaces/BreedPhotoGridInterfaces'
 
 const dogApiBaseURL = process.env.REACT_APP_DOG_API_BASEURL
 
@@ -8,18 +11,28 @@ const api = axios.create({
 })
 
 export const DogAPI = {
-  async getAllBreeds(): Promise<Object | null> {
+  async getAllBreeds(): Promise<Array<BreedObject>> {
     try {
       const response = await api.get('/breeds/list/all')
       if (!response.data) throw new Error('Could not fetch breeds list')
       const { status, message } = response.data
-      if (status === 'success') return message
+      if (status === 'success') {
+        const breedList: BreedObject[] = Object.keys(message).map(
+          (breed, index) => ({
+            breed,
+            key: `${breed}-${index}`,
+            subbreeds: message[breed],
+          }),
+        )
 
-      return null
+        return breedList
+      }
+
+      return []
     } catch (err) {
       if (err instanceof Error)
         console.error(`Error fetching breeds list: ${err.message}`)
-      return null
+      return []
     }
   },
 

@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
-import BreedFilterMenu from '../../components/BreedFilterMenu'
-import PhotoGrid from '../../components/PhotoGrid'
+import BreedFilterMenu from './BreedFilterMenu'
+import PhotoGrid from './PhotoGrid'
 import { HomeWrapper } from './styles'
 import { DogAPI } from '../../api/api'
-import { BreedPhotoItemObject } from '../../interfaces/BreedPhotoGridInterfaces'
+import {
+  BreedObject,
+  BreedPhotoItemObject,
+} from '../../interfaces/BreedPhotoGridInterfaces'
 
 export default function Home() {
-  const [breedsList, setBreedsList] = useState<Object | null>(null)
+  const [breedsList, setBreedsList] = useState<BreedObject[]>([])
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const [selectedBreedsPhotoList, setSelectedBreedsPhotoList] = useState<
     BreedPhotoItemObject[]
@@ -41,7 +44,7 @@ export default function Home() {
 
   return (
     <HomeWrapper>
-      <BreedFilterMenu breedsList={breedsList} />
+      <BreedFilterMenu />
       <PhotoGrid
         isFetching={isFetching}
         breedsPhotoList={selectedBreedsPhotoList}
