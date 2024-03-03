@@ -1,15 +1,16 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Button } from '../../../components/Button'
 import { BreedFilterMenuWrapper } from './styles'
 import BreedFilterModal from '../BreedFilterModal'
 import { BreedFilterItem } from '../BreedFilterItem'
+import { HomeContext } from '../HomeContext'
 
 export default function BreedFilterMenu() {
-  const [isModalOpen, setModalOpen] = useState<boolean>(true)
+  const [isModalOpen, setModalOpen] = useState<boolean>(false)
+  const { breedFilterList } = useContext(HomeContext)
 
   function handleToggleModal() {
-    // setModalOpen(!isModalOpen)
-    setModalOpen(isModalOpen)
+    setModalOpen(!isModalOpen)
   }
 
   return (
@@ -26,17 +27,14 @@ export default function BreedFilterMenu() {
         >
           Manage Breeds
         </Button>
-        <BreedFilterItem breedName="corgi" onClick={() => {}} type="remove" />
-        <BreedFilterItem
-          breedName="schnauzer"
-          onClick={() => {}}
-          type="remove"
-        />
-        <BreedFilterItem
-          breedName="daschound"
-          onClick={() => {}}
-          type="remove"
-        />
+        {breedFilterList.length >= 1 &&
+          breedFilterList.map((filter) => (
+            <BreedFilterItem
+              type="remove"
+              breedName={filter}
+              onClick={() => {}}
+            />
+          ))}
       </BreedFilterMenuWrapper>
     </>
   )
