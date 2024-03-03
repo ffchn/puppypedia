@@ -7,10 +7,15 @@ import { HomeContext } from '../HomeContext'
 
 export default function BreedFilterMenu() {
   const [isModalOpen, setModalOpen] = useState<boolean>(false)
-  const { breedFilterList } = useContext(HomeContext)
+  const { breedFilterList, updateBreedsFilter } = useContext(HomeContext)
 
   function handleToggleModal() {
     setModalOpen(!isModalOpen)
+  }
+
+  function removeFilter(breed: string) {
+    const updatedFilters = breedFilterList.filter((filter) => filter !== breed)
+    updateBreedsFilter(updatedFilters)
   }
 
   return (
@@ -28,12 +33,12 @@ export default function BreedFilterMenu() {
           Manage Breeds
         </Button>
         {breedFilterList.length >= 1 &&
-          breedFilterList.map((filter) => (
+          breedFilterList.map((breed) => (
             <BreedFilterItem
               type="remove"
-              key={`filter-${filter}`}
-              breedName={filter}
-              onClick={() => {}}
+              key={`filter-${breed}`}
+              breedName={breed}
+              onClick={() => removeFilter(breed)}
             />
           ))}
       </BreedFilterMenuWrapper>

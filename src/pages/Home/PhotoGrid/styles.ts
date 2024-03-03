@@ -11,41 +11,6 @@ export const PhotoGridWrapper = styled.div`
   width: 100%;
 `
 
-export const PhotoGridEmptyStateWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 25rem;
-  margin: 10rem auto;
-
-  .emptyStateIcon {
-    animation: breathing 2s ease-out infinite normal;
-  }
-
-  @keyframes breathing {
-    0% {
-      -webkit-transform: scale(0.5);
-      transform: scale(0.9);
-    }
-
-    50% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
-    }
-
-    100% {
-      -webkit-transform: scale(0.5);
-      transform: scale(0.9);
-    }
-  }
-
-  .emptyStateMessage {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-`
-
 export const PhotoGridItemWraper = styled.div<PhotoGridItemWrapperProps>`
   height: 12.5rem;
   background: ${({ theme }) => theme.colors['gray-100']};

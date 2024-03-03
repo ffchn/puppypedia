@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Dog, PawPrint } from 'phosphor-react'
 import BreedFilterMenu from './BreedFilterMenu'
 import PhotoGrid from './PhotoGrid'
-import { HomeWrapper } from './styles'
+import { EmptyStateWrapper, HomeWrapper } from './styles'
 import { DogAPI } from '../../api/api'
 import {
   BreedObject,
@@ -11,11 +12,11 @@ import { HomeContext } from './HomeContext'
 
 export default function Home() {
   const [breedsList, setBreedsList] = useState<BreedObject[]>([])
-  const [isFetching, setIsFetching] = useState<boolean>(false)
+  const [isFetching, setIsFetching] = useState<boolean>(true)
   const [breedFilterList, setBreedFilterList] = useState<string[]>([
     'corgi',
-    'schnauzer',
-    'greyhound',
+    'shiba',
+    'labrador',
   ])
   const [selectedBreedsPhotoList, setSelectedBreedsPhotoList] = useState<
     BreedPhotoItemObject[]
@@ -33,8 +34,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (!breedsList) return
-    setSelectedBreedsPhotoList([]) // todo: clear this up
+    if (!breedsList && !breedFilterList.length) return
 
     async function fetchBreedsImageList() {
       const imageList = await DogAPI.fetchBreedListImages(breedFilterList)
@@ -57,10 +57,32 @@ export default function Home() {
     <HomeWrapper>
       <HomeContext.Provider value={memoizedContextValues}>
         <BreedFilterMenu />
-        <PhotoGrid
-          isFetching={isFetching}
-          breedsPhotoList={selectedBreedsPhotoList}
-        />
+        {!isFetching && breedFilterList.length >= 1 ? (
+          <PhotoGrid breedsPhotoList={selectedBreedsPhotoList} />
+        ) : (
+          <EmptyStateWrapper>
+            <div className="emptyStateIcon">
+              {isFetching ? (
+                <PawPrint size={128} className="breathing" />
+              ) : (
+                <Dog size={128} />
+              )}
+            </div>
+
+            <div className="emptyStateMessage">
+              {isFetching ? (
+                <span>Fetch!-ing</span>
+              ) : (
+                <span>
+                  <i>oof! </i>
+                  <br />
+                  <br />
+                  No results found. Try updating the filters!
+                </span>
+              )}
+            </div>
+          </EmptyStateWrapper>
+        )}
       </HomeContext.Provider>
     </HomeWrapper>
   )

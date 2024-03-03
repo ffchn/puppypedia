@@ -1,4 +1,11 @@
-import { FormEvent, useCallback, useContext, useMemo, useState } from 'react'
+import {
+  FormEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { Dog } from 'phosphor-react'
 import { BreedFilterItem } from '../BreedFilterItem'
 import Modal, { ModalProps } from '../../../components/Modal'
@@ -18,8 +25,7 @@ export default function BreedFilterModal({
   const { breedsList, breedFilterList, updateBreedsFilter } =
     useContext(HomeContext)
 
-  const [selectedBreeds, setSelectedBreeds] =
-    useState<string[]>(breedFilterList)
+  const [selectedBreeds, setSelectedBreeds] = useState<string[]>([])
 
   function searchFormSubmit(e: FormEvent) {
     e.preventDefault()
@@ -27,9 +33,10 @@ export default function BreedFilterModal({
     closeModalCallback()
   }
 
-  function handleCancel() {
-    closeModalCallback()
-  }
+  useEffect(() => {
+    // updates pre-selected items in options list when filters deleted from home
+    setSelectedBreeds(breedFilterList)
+  }, [breedFilterList, isOpen])
 
   const handleSelectBreedFilter = useCallback(
     (selectedBreed: string) => {
@@ -119,7 +126,7 @@ export default function BreedFilterModal({
             <Button
               type="button"
               variant="outlined"
-              onClick={() => handleCancel()}
+              onClick={closeModalCallback}
             >
               Cancel
             </Button>
