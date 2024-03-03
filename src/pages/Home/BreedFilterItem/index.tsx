@@ -1,15 +1,24 @@
-import { X } from 'phosphor-react'
+import { Plus, X } from 'phosphor-react'
 import { BreedFilterItemWrapper } from './styles'
+import { BreedFilterItemProps } from '../../../interfaces/BreedFiltersInterfaces'
 
-interface BreedFilterItemProps {
-  breedName: string
-}
+export function BreedFilterItem({
+  breedName,
+  onClick,
+  type,
+}: BreedFilterItemProps) {
+  function handleFilterItemCallback() {
+    onClick(breedName)
+  }
 
-export function BreedFilterItem({ breedName }: BreedFilterItemProps) {
   return (
-    <BreedFilterItemWrapper>
+    <BreedFilterItemWrapper onClick={() => handleFilterItemCallback()}>
       <span className="breed">{breedName}</span>
-      <X size={16} weight="bold" />
+      {type === 'add' ? (
+        <Plus size={16} weight="bold" />
+      ) : (
+        <X size={16} weight="bold" />
+      )}
     </BreedFilterItemWrapper>
   )
 }

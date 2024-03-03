@@ -1,6 +1,11 @@
 import styled from 'styled-components'
+import { BreedObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 
-export const BreedFilterItemWrapper = styled.span`
+interface BreedFilterItemWrapperProps {
+  onClick: (props: string | BreedObject) => void
+}
+
+export const BreedFilterItemWrapper = styled.span<BreedFilterItemWrapperProps>`
   border-radius: 8px;
   padding: 0.5rem;
   display: inline-flex;

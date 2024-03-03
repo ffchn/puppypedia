@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useCallback, useState } from 'react'
 import { BreedFilterItem } from '../BreedFilterItem'
 import Modal, { ModalProps } from '../../../components/Modal'
 import { Button } from '../../../components/Button'
@@ -16,6 +17,7 @@ export default function BreedFilterModal({
   isOpen,
   closeModalCallback,
 }: ModalProps) {
+  const [selectedBreeds, setSelectedBreeds] = useState<string[]>([])
   /** https://www.react-hook-form.com/api/useform/
    * register(name, {options})
    * returns form input events ({onChange, onBlur, onFocus...})
@@ -48,8 +50,22 @@ export default function BreedFilterModal({
     closeModalCallback()
   }
 
+  const handleSelectBreedFilter = useCallback(
+    (selectedBreed: string) => {
+      if (selectedBreeds.indexOf(selectedBreed) === -1) {
+        setSelectedBreeds((state) => [...state, selectedBreed])
+      }
+    },
+    [selectedBreeds],
+  )
+
+  const handleRemoveBreedFilter = useCallback((selectedBreed: string) => {
+    setSelectedBreeds((state) =>
+      state.filter((breed) => breed !== selectedBreed),
+    )
+  }, [])
+
   const watchInputValue = watch('breed')
-  console.log(watchInputValue)
   const isSubmitDisabled = !watchInputValue
 
   return (
@@ -59,13 +75,34 @@ export default function BreedFilterModal({
 
         <h3>Selected</h3>
         <div className="selectedBreedOptions">
-          <BreedFilterItem breedName="corgi" />
-          <BreedFilterItem breedName="corgi" />
-          <BreedFilterItem breedName="corgi" />
+          {selectedBreeds.length ? (
+            selectedBreeds.map((breed: string) => (
+              <BreedFilterItem
+                type="remove"
+                breedName={breed}
+                onClick={handleRemoveBreedFilter}
+              />
+            ))
+          ) : (
+            <span>Search breeds from input below</span>
+          )}
         </div>
         <form action="" onSubmit={handleSubmit(searchBreedsList)}>
           <h3>Search for another breed:</h3>
           <BreedSearchInput type="text" {...register('breed')} />
+          <div className="searchResults">
+            <h5>Breed search results:</h5>
+            <BreedFilterItem
+              type="add"
+              breedName="corgi"
+              onClick={handleSelectBreedFilter}
+            />
+            <BreedFilterItem
+              breedName="hound"
+              type="add"
+              onClick={handleSelectBreedFilter}
+            />
+          </div>
           <div className="searchFormActions">
             <Button
               type="button"

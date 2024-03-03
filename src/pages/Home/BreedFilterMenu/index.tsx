@@ -26,9 +26,17 @@ export default function BreedFilterMenu() {
         >
           Manage Breeds
         </Button>
-        <BreedFilterItem breedName="corgi" />
-        <BreedFilterItem breedName="schnauzer" />
-        <BreedFilterItem breedName="daschound" />
+        <BreedFilterItem breedName="corgi" onClick={() => {}} type="remove" />
+        <BreedFilterItem
+          breedName="schnauzer"
+          onClick={() => {}}
+          type="remove"
+        />
+        <BreedFilterItem
+          breedName="daschound"
+          onClick={() => {}}
+          type="remove"
+        />
       </BreedFilterMenuWrapper>
     </>
   )
