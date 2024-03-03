@@ -1,36 +1,29 @@
-import { X } from 'phosphor-react'
+import { useState } from 'react'
 import { Button } from '../../../components/Button'
-import { BreedFilterItemWrapper, BreedFilterMenuWrapper } from './styles'
+import { BreedFilterMenuWrapper } from './styles'
 import BreedFilterModal from '../BreedFilterModal'
-// import { BreedObject } from '../../interfaces/BreedPhotoGridInterfaces'
+import { BreedFilterItem } from '../BreedFilterItem'
 
-interface BreedFilterItemProps {
-  breedName: string
-}
-
-// interface BreedsFilterMenuProps {
-//   breedsList: BreedObject[]
-// }
-
-function BreedFilterItem({ breedName }: BreedFilterItemProps) {
-  return (
-    <BreedFilterItemWrapper>
-      <span className="breed">{breedName}</span>
-      <X size={16} weight="bold" />
-    </BreedFilterItemWrapper>
-  )
-}
-
-// export default function BreedFilterMenu({ breedsList }: BreedsFilterMenuProps) {
 export default function BreedFilterMenu() {
+  const [isModalOpen, setModalOpen] = useState<boolean>(true)
+
+  function handleToggleModal() {
+    // setModalOpen(!isModalOpen)
+    setModalOpen(isModalOpen)
+  }
+
   return (
     <>
-      <BreedFilterModal />
+      <BreedFilterModal
+        isOpen={isModalOpen}
+        closeModalCallback={() => handleToggleModal()}
+      />
       <BreedFilterMenuWrapper>
-        {/* {breedsList.map((breed) => (
-        <BreedFilterItem breedName={breed.breed} />
-      ))} */}
-        <Button type="button" className="filterButton">
+        <Button
+          type="button"
+          className="filterButton"
+          onClick={() => handleToggleModal()}
+        >
           Manage Breeds
         </Button>
         <BreedFilterItem breedName="corgi" />

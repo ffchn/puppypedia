@@ -1,9 +1,15 @@
-import { useState } from 'react'
-
+import { Props as ReactModalProps } from 'react-modal'
 import { ModalContainer, ModalWrapper } from './styles'
 
-export default function Modal() {
-  const [isOpen, setIsOpen] = useState(true)
+export interface ModalProps extends ReactModalProps {
+  closeModalCallback: () => void
+}
+
+export default function Modal({
+  isOpen,
+  closeModalCallback,
+  children,
+}: ModalProps) {
   const customStyles = {
     overlay: {
       backgroundColor: 'transparent',
@@ -15,7 +21,7 @@ export default function Modal() {
 
   function handleCloseModal(e: React.MouseEvent | React.KeyboardEvent) {
     e.stopPropagation()
-    setIsOpen(false)
+    closeModalCallback()
   }
 
   return (
@@ -24,9 +30,7 @@ export default function Modal() {
       onRequestClose={(e) => handleCloseModal(e)}
       style={customStyles}
     >
-      <ModalContainer>
-        <h1>test</h1>
-      </ModalContainer>
+      <ModalContainer>{children}</ModalContainer>
     </ModalWrapper>
   )
 }
