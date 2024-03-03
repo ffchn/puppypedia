@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 interface PhotoGridItemWrapperProps {
-  src: string
+  photoUrl: string
 }
 
 export const PhotoGridWrapper = styled.div`
@@ -51,7 +51,7 @@ export const PhotoGridItemWraper = styled.div<PhotoGridItemWrapperProps>`
   background: ${({ theme }) => theme.colors['gray-100']};
   border-radius: 8px;
   cursor: pointer;
-  background: ${({ src }) => `url('${src}')`};
+  background: ${({ photoUrl }) => `url('${photoUrl}')`};
   background-position: center;
   background-size: cover;
   transition: 0.5s ease;

@@ -3,31 +3,29 @@ import BreedFilterMenu from '../../components/BreedFilterMenu'
 import PhotoGrid from '../../components/PhotoGrid'
 import { HomeWrapper } from './styles'
 import { DogAPI } from '../../api/api'
+import { BreedPhotoItemObject } from '../../interfaces/BreedPhotoGridInterfaces'
 
 export default function Home() {
   const [breedsList, setBreedsList] = useState<Object | null>(null)
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const [selectedBreedsPhotoList, setSelectedBreedsPhotoList] = useState<
-    string[]
+    BreedPhotoItemObject[]
   >([])
 
   async function fetchBreedsListData() {
     setIsFetching(true)
     const breeds = await DogAPI.getAllBreeds()
-    // console.log(breeds)
-
     setBreedsList(breeds)
     setIsFetching(false)
   }
 
-  // function handleUpdatePhotoList(photoList: Array<string>) {
-  //   setSelectedBreedsPhotoList(photoList)
-  // }
-
   async function fetchBreedsImageList() {
-    // const imageList = await DogAPI.fetchBreedImageList('corgi')
-    // setSelectedBreedsPhotoList(imageList)
-    // console.log('imagelist', imageList)
+    const imageList = await DogAPI.fetchBreedListImages([
+      'corgi',
+      'hound',
+      'poodle',
+    ])
+    setSelectedBreedsPhotoList(imageList)
   }
 
   useEffect(() => {

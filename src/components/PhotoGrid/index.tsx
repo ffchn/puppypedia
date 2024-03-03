@@ -4,18 +4,19 @@ import {
   PhotoGridItemWraper,
   PhotoGridWrapper,
 } from './styles'
+import { BreedPhotoItemObject } from '../../interfaces/BreedPhotoGridInterfaces'
 
 interface PhotoGridProps {
   isFetching: boolean
-  breedsPhotoList: Array<string>
+  breedsPhotoList: Array<BreedPhotoItemObject>
 }
 
 interface PhotoGridItemProps {
-  src: string
+  photoUrl: string
 }
 
-function PhotoGridItem({ src }: PhotoGridItemProps) {
-  return <PhotoGridItemWraper src={src} />
+function PhotoGridItem({ photoUrl }: PhotoGridItemProps) {
+  return <PhotoGridItemWraper photoUrl={photoUrl} />
 }
 
 export default function PhotoGrid({
@@ -31,8 +32,8 @@ export default function PhotoGrid({
     </PhotoGridEmptyStateWrapper>
   ) : (
     <PhotoGridWrapper>
-      {breedsPhotoList.map((item: string) => (
-        <PhotoGridItem src={item} />
+      {breedsPhotoList.map((item: BreedPhotoItemObject) => (
+        <PhotoGridItem photoUrl={item.photoUrl} />
       ))}
     </PhotoGridWrapper>
   )
