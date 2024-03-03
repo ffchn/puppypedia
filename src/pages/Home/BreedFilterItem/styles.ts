@@ -14,7 +14,7 @@ export const BreedFilterItemWrapper = styled.span`
 
   &:hover {
     color: ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors['orange-700']};
+    background-color: ${({ theme }) => theme.colors['gray-700']};
   }
 
   .breed {

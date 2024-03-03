@@ -19,12 +19,6 @@ export const ButtonWrapper = styled.button<ButtonProps>`
 
   transition: 0.5s ease;
 
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    background-color: ${({ theme }) => theme['gray-600']};
-  }
-
   ${({ variant, theme }) =>
     variant === 'default' &&
     css`
@@ -49,4 +43,10 @@ export const ButtonWrapper = styled.button<ButtonProps>`
         border-color: ${theme.colors['orange-300']};
       }
     `};
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background-color: ${({ theme }) => theme.colors['gray-600']};
+  }
 `

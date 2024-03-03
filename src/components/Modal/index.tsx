@@ -12,7 +12,7 @@ export default function Modal({
 }: ModalProps) {
   const customStyles = {
     overlay: {
-      backgroundColor: 'transparent',
+      backgroundColor: 'rgba(0,0,0,.2)',
     },
     content: {
       inset: 'auto',
