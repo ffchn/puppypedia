@@ -15,14 +15,16 @@ export default function BreedFilterModal({
   closeModalCallback,
 }: ModalProps) {
   const [inputValue, setInputValue] = useState<string>('')
-  const { breedsList, updateBreedsFilter } = useContext(HomeContext)
+  const { breedsList, breedFilterList, updateBreedsFilter } =
+    useContext(HomeContext)
 
-  const [selectedBreeds, setSelectedBreeds] = useState<string[]>([])
+  const [selectedBreeds, setSelectedBreeds] =
+    useState<string[]>(breedFilterList)
 
-  function searchBreedsList(data: any) {
-    // todo: fix this
-    updateBreedsFilter(data)
-    console.log(data)
+  function searchFormSubmit(e: FormEvent) {
+    e.preventDefault()
+    updateBreedsFilter(selectedBreeds)
+    closeModalCallback()
   }
 
   function handleCancel() {
@@ -33,7 +35,6 @@ export default function BreedFilterModal({
     (selectedBreed: string) => {
       if (selectedBreeds.indexOf(selectedBreed) === -1) {
         setSelectedBreeds((state) => [...state, selectedBreed])
-        setInputValue('')
       }
     },
     [selectedBreeds],
@@ -72,6 +73,7 @@ export default function BreedFilterModal({
               <BreedFilterItem
                 type="remove"
                 breedName={breed}
+                key={breed}
                 onClick={handleRemoveBreedFilter}
               />
             ))
@@ -79,7 +81,7 @@ export default function BreedFilterModal({
             <span>Search breeds from input below</span>
           )}
         </div>
-        <form action="" onSubmit={searchBreedsList}>
+        <form action="" onSubmit={searchFormSubmit}>
           <h3>Search for {selectedBreeds.length >= 1 && 'another '} breed:</h3>
           <BreedSearchInput
             type="text"

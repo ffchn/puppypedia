@@ -16,7 +16,7 @@ interface PhotoGridItemProps {
 }
 
 function PhotoGridItem({ photoUrl }: PhotoGridItemProps) {
-  return <PhotoGridItemWraper photoUrl={photoUrl} />
+  return <PhotoGridItemWraper src={photoUrl} />
 }
 
 export default function PhotoGrid({

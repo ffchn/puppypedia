@@ -29,6 +29,7 @@ export default function Modal({
       isOpen={isOpen}
       onRequestClose={(e) => handleCloseModal(e)}
       style={customStyles}
+      ariaHideApp={false}
     >
       <ModalContainer>{children}</ModalContainer>
     </ModalWrapper>

@@ -31,6 +31,7 @@ export default function BreedFilterMenu() {
           breedFilterList.map((filter) => (
             <BreedFilterItem
               type="remove"
+              key={`filter-${filter}`}
               breedName={filter}
               onClick={() => {}}
             />
