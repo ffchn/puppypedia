@@ -7,7 +7,7 @@ import { HomeContext } from '../HomeContext'
 import { BreedObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 
 export default function BreedFilterMenu() {
-  const [isModalOpen, setModalOpen] = useState<boolean>(true)
+  const [isModalOpen, setModalOpen] = useState<boolean>(false)
   const { breedFilterList, updateBreedsFilter } = useContext(HomeContext)
 
   function handleToggleModal() {
@@ -35,15 +35,17 @@ export default function BreedFilterMenu() {
         >
           Manage Breeds
         </Button>
-        {breedFilterList.length >= 1 &&
-          breedFilterList.map((breed) => (
-            <BreedFilterItem
-              type="remove"
-              key={`filter-${breed}`}
-              breedData={breed}
-              onClick={() => removeFilter(breed)}
-            />
-          ))}
+        <div className="filterList">
+          {breedFilterList.length >= 1 &&
+            breedFilterList.map((breed) => (
+              <BreedFilterItem
+                type="remove"
+                key={`filter-${breed}`}
+                breedData={breed}
+                onClick={() => removeFilter(breed)}
+              />
+            ))}
+        </div>
       </BreedFilterMenuWrapper>
     </>
   )

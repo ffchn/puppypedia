@@ -38,7 +38,7 @@ export default function BreedFilterModal({
   useEffect(() => {
     // resets filters and input value when modal toggles
     setSelectedBreeds(breedFilterList)
-    setInputValue('retriever')
+    setInputValue('')
   }, [breedFilterList, isOpen])
 
   const handleSelectBreedFilter = useCallback(
@@ -89,7 +89,7 @@ export default function BreedFilterModal({
               />
             ))
           ) : (
-            <span>Search breeds from input below</span>
+            <span>Search breeds in input below</span>
           )}
         </div>
         <form action="" onSubmit={searchFormSubmit}>

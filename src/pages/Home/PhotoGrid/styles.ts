@@ -6,9 +6,20 @@ interface PhotoGridItemWrapperProps {
 
 export const PhotoGridWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   gap: 1.5rem;
   width: 100%;
+
+  @media screen and (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
 `
 
 export const PhotoGridItemWraper = styled.div<PhotoGridItemWrapperProps>`

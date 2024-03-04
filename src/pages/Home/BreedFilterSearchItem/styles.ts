@@ -23,6 +23,8 @@ export const BreedFilterItemWrapper = styled.span<BreedFilterItemWrapperProps>`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 0.25rem;
+    padding-left: 0.25rem;
   }
 
   &:hover {
@@ -39,7 +41,7 @@ export const BreedFilterItemWrapper = styled.span<BreedFilterItemWrapperProps>`
 export const SubbreedItemListWrapper = styled.div`
   display: flex;
   margin: 0.25rem 0;
-  padding: 0 0.25rem;
+  padding-right: 0.25rem;
   flex-wrap: wrap;
 `
 

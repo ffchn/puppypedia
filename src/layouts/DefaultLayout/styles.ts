@@ -10,4 +10,6 @@ export const LayoutContainer = styled.div`
   border-radius: 8px;
   box-shadow: ${({ theme }) => theme.shadow.card};
   min-height: 60vh;
+  max-height: 85vh;
+  overflow-y: auto;
 `

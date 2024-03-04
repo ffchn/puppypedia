@@ -1,4 +1,4 @@
-import { Plus, X } from 'phosphor-react'
+import { Plus } from 'phosphor-react'
 import { MouseEvent } from 'react'
 import {
   BreedFilterItemWrapper,
@@ -10,7 +10,6 @@ import { BreedFilterItemProps } from '../../../interfaces/BreedFiltersInterfaces
 export function BreedFilterSearchItem({
   breedData,
   onClick,
-  type,
 }: BreedFilterItemProps) {
   function handleFilterItemCallback(
     e: MouseEvent<HTMLSpanElement>,
@@ -18,6 +17,7 @@ export function BreedFilterSearchItem({
   ) {
     e.stopPropagation()
     onClick(
+      // prepares object with parent breed for subreed search
       subbreed
         ? { breed: subbreed, parentBreed: breedData.breed, subbreeds: [] }
         : breedData,
@@ -31,11 +31,7 @@ export function BreedFilterSearchItem({
     >
       <div className="mainBreedWrapper">
         <span className="breed">{breedData.breed}</span>
-        {type === 'add' ? (
-          <Plus size={16} weight="bold" />
-        ) : (
-          <X size={16} weight="bold" />
-        )}
+        <Plus size={16} weight="bold" />
       </div>
       {breedData.subbreeds.length >= 1 && (
         <SubbreedItemListWrapper>
@@ -44,11 +40,7 @@ export function BreedFilterSearchItem({
               onClick={(e) => handleFilterItemCallback(e, breed)}
             >
               <span className="breed">{breed}</span>
-              {type === 'add' ? (
-                <Plus size={16} weight="bold" />
-              ) : (
-                <X size={16} weight="bold" />
-              )}
+              <Plus size={16} weight="bold" />
             </SubbreedFilterItemWrapper>
           ))}
         </SubbreedItemListWrapper>
