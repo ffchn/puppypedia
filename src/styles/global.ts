@@ -16,6 +16,7 @@ const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.colors['gray-100']};
         color: ${({ theme }) => theme.colors['gray-700']};
         -webkit-font-smoothing: antialiased;
+        height: 100vh;
     }
 
     body, input, textarea, button {
