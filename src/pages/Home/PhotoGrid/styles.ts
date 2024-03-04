@@ -23,6 +23,7 @@ export const PhotoGridWrapper = styled.div`
 `
 
 export const PhotoGridItemWraper = styled.div<PhotoGridItemWrapperProps>`
+  cursor: pointer;
   height: 12.5rem;
   background: ${({ theme }) => theme.colors['gray-100']};
   border-radius: 8px;

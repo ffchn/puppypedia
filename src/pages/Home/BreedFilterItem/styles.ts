@@ -3,7 +3,6 @@ import { BreedObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 
 interface BreedFilterItemWrapperProps {
   onClick: (props: string | BreedObject) => void
-  subbreeds?: boolean
 }
 
 export const BreedFilterItemWrapper = styled.span<BreedFilterItemWrapperProps>`

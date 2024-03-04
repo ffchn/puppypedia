@@ -12,10 +12,7 @@ export default function BreedFilterItem({
   }
 
   return (
-    <BreedFilterItemWrapper
-      onClick={() => handleFilterItemCallback()}
-      subbreeds={breedData.subbreeds.length >= 1}
-    >
+    <BreedFilterItemWrapper onClick={() => handleFilterItemCallback()}>
       <span className="breed">{breedData.breed}</span>
       {type === 'add' ? (
         <Plus size={16} weight="bold" />

@@ -37,10 +37,11 @@ export default function BreedFilterMenu() {
         </Button>
         <div className="filterList">
           {breedFilterList.length >= 1 &&
-            breedFilterList.map((breed) => (
+            breedFilterList.map((breed, index) => (
               <BreedFilterItem
                 type="remove"
-                key={`filter-${breed}`}
+                // eslint-disable-next-line react/no-array-index-key
+                key={`filter-${breed}-${index}`}
                 breedData={breed}
                 onClick={() => removeFilter(breed)}
               />
