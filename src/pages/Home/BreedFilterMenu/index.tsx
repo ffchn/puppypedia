@@ -2,12 +2,12 @@ import { useContext, useState } from 'react'
 import { Button } from '../../../components/Button'
 import { BreedFilterMenuWrapper } from './styles'
 import BreedFilterModal from '../BreedFilterModal'
-import { BreedFilterItem } from '../BreedFilterItem'
+import BreedFilterItem from '../BreedFilterItem'
 import { HomeContext } from '../HomeContext'
 import { BreedObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 
 export default function BreedFilterMenu() {
-  const [isModalOpen, setModalOpen] = useState<boolean>(false)
+  const [isModalOpen, setModalOpen] = useState<boolean>(true)
   const { breedFilterList, updateBreedsFilter } = useContext(HomeContext)
 
   function handleToggleModal() {

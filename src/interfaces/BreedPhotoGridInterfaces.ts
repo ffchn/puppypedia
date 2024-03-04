@@ -1,5 +1,6 @@
 export interface BreedObject {
   breed: string
+  parentBreed?: string
   subbreeds: string[]
 }
 

@@ -38,9 +38,11 @@ export const DogAPI = {
 
   async fetchBreedImageList(
     breed: string,
+    parentBreed?: string,
   ): Promise<Array<BreedPhotoItemObject>> {
     try {
-      const response = await api.get(`/breed/${breed}/images/random/5`)
+      const breedUrl = parentBreed ? `${parentBreed}/${breed}` : breed // prepares url for subbreed fetching
+      const response = await api.get(`/breed/${breedUrl}/images/random/5`)
       if (!response.data) throw new Error('Could not fetch breed image list')
       const { message, status } = response.data
       if (status === 'success') {
@@ -59,7 +61,9 @@ export const DogAPI = {
   async fetchBreedListImages(filters: BreedObject[]) {
     try {
       const promiseList = await Promise.all(
-        filters.map((filter) => this.fetchBreedImageList(filter.breed)),
+        filters.map((filter) =>
+          this.fetchBreedImageList(filter.breed, filter.parentBreed),
+        ),
       )
 
       return promiseList.flat()

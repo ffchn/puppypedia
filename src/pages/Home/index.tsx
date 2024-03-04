@@ -14,6 +14,8 @@ export default function Home() {
   const [breedsList, setBreedsList] = useState<BreedObject[]>([])
   const [isFetching, setIsFetching] = useState<boolean>(true)
   const [breedFilterList, setBreedFilterList] = useState<BreedObject[]>([
+    { breed: 'bulldog', subbreeds: ['bullterrier'] },
+    { breed: 'pug', subbreeds: [] },
     { breed: 'corgi', subbreeds: [] },
   ])
   const [selectedBreedsPhotoList, setSelectedBreedsPhotoList] = useState<

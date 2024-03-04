@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import { Dog } from 'phosphor-react'
-import { BreedFilterItem } from '../BreedFilterItem'
+import BreedFilterItem from '../BreedFilterItem'
 import Modal, { ModalProps } from '../../../components/Modal'
 import { Button } from '../../../components/Button'
 import {
@@ -17,6 +17,7 @@ import {
 } from './styles'
 import { HomeContext } from '../HomeContext'
 import { BreedObject } from '../../../interfaces/BreedPhotoGridInterfaces'
+import { BreedFilterSearchItem } from '../BreedFilterSearchItem'
 
 export default function BreedFilterModal({
   isOpen,
@@ -37,7 +38,7 @@ export default function BreedFilterModal({
   useEffect(() => {
     // resets filters and input value when modal toggles
     setSelectedBreeds(breedFilterList)
-    setInputValue('')
+    setInputValue('retriever')
   }, [breedFilterList, isOpen])
 
   const handleSelectBreedFilter = useCallback(
@@ -106,7 +107,7 @@ export default function BreedFilterModal({
 
                   <div className="resultsListWrapper">
                     {resultsList.map((result) => (
-                      <BreedFilterItem
+                      <BreedFilterSearchItem
                         type="add"
                         key={result.breed}
                         breedData={result}

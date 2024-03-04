@@ -2,7 +2,7 @@ import { Plus, X } from 'phosphor-react'
 import { BreedFilterItemWrapper } from './styles'
 import { BreedFilterItemProps } from '../../../interfaces/BreedFiltersInterfaces'
 
-export function BreedFilterItem({
+export default function BreedFilterItem({
   breedData,
   onClick,
   type,
@@ -12,7 +12,10 @@ export function BreedFilterItem({
   }
 
   return (
-    <BreedFilterItemWrapper onClick={() => handleFilterItemCallback()}>
+    <BreedFilterItemWrapper
+      onClick={() => handleFilterItemCallback()}
+      subbreeds={breedData.subbreeds.length >= 1}
+    >
       <span className="breed">{breedData.breed}</span>
       {type === 'add' ? (
         <Plus size={16} weight="bold" />
