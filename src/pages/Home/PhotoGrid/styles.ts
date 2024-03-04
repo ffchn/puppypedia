@@ -8,9 +8,6 @@ export const PhotoGridWrapper = styled.div`
   display: grid;
   gap: 1.5rem;
   width: 100%;
-  max-height: 60vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
 
   @media screen and (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
@@ -38,5 +35,18 @@ export const PhotoGridItemWraper = styled.div<PhotoGridItemWrapperProps>`
   &:hover {
     transform: scale(1.1);
     box-shadow: ${({ theme }) => theme.shadow.card};
+  }
+`
+
+export const PhotoItemModal = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  min-width: 20rem;
+  max-height: 60vh;
+
+  img {
+    max-width: 100%;
   }
 `

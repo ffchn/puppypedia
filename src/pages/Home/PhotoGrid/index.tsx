@@ -1,5 +1,7 @@
-import { PhotoGridItemWraper, PhotoGridWrapper } from './styles'
+import { useState } from 'react'
+import { PhotoGridItemWraper, PhotoGridWrapper, PhotoItemModal } from './styles'
 import { BreedPhotoItemObject } from '../../../interfaces/BreedPhotoGridInterfaces'
+import Modal from '../../../components/Modal'
 
 interface PhotoGridProps {
   breedsPhotoList: Array<BreedPhotoItemObject>
@@ -7,19 +9,39 @@ interface PhotoGridProps {
 
 interface PhotoGridItemProps {
   photoUrl: string
+  onClick: () => void
 }
 
-function PhotoGridItem({ photoUrl }: PhotoGridItemProps) {
-  return <PhotoGridItemWraper src={photoUrl} />
+function PhotoGridItem({ photoUrl, onClick }: PhotoGridItemProps) {
+  return <PhotoGridItemWraper src={photoUrl} onClick={() => onClick()} />
 }
 
 export default function PhotoGrid({ breedsPhotoList }: PhotoGridProps) {
+  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
+
+  function handleToggleModal(selected: string | null) {
+    setSelectedPhoto(selected)
+  }
   return (
-    <PhotoGridWrapper>
-      {breedsPhotoList.map((item: BreedPhotoItemObject, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <PhotoGridItem photoUrl={item.photoUrl} key={index} />
-      ))}
-    </PhotoGridWrapper>
+    <>
+      <PhotoGridWrapper>
+        {breedsPhotoList.map((item: BreedPhotoItemObject, index) => (
+          <PhotoGridItem
+            photoUrl={item.photoUrl}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            onClick={() => handleToggleModal(item.photoUrl)}
+          />
+        ))}
+      </PhotoGridWrapper>
+      <Modal
+        isOpen={!!selectedPhoto}
+        closeModalCallback={() => handleToggleModal(null)}
+      >
+        <PhotoItemModal>
+          <img src={selectedPhoto || ''} alt="" />
+        </PhotoItemModal>
+      </Modal>
+    </>
   )
 }

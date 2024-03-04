@@ -4,7 +4,7 @@ export const LayoutWrapper = styled.div``
 
 export const LayoutContainer = styled.div`
   max-width: 62.5rem;
-  margin: 2rem auto 0;
+  margin: 2rem auto;
   background-color: ${({ theme }) => theme.colors.white};
   padding: 2.5rem;
   border-radius: 8px;
