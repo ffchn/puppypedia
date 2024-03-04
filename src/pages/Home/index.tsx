@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Dog, PawPrint } from 'phosphor-react'
+import { useQuery } from '@tanstack/react-query'
 import BreedFilterMenu from './BreedFilterMenu'
 import PhotoGrid from './PhotoGrid'
 import { EmptyStateWrapper, HomeWrapper } from './styles'
@@ -9,10 +10,10 @@ import {
   BreedPhotoItemObject,
 } from '../../interfaces/BreedPhotoGridInterfaces'
 import { HomeContext } from './HomeContext'
+import { queryClient } from '../../api/queryClient'
 
 export default function Home() {
   const [breedsList, setBreedsList] = useState<BreedObject[]>([])
-  const [isFetching, setIsFetching] = useState<boolean>(true)
   const [breedFilterList, setBreedFilterList] = useState<BreedObject[]>([
     { breed: 'bulldog', subbreeds: ['bullterrier'] },
     { breed: 'pug', subbreeds: [] },
@@ -22,27 +23,33 @@ export default function Home() {
     BreedPhotoItemObject[]
   >([])
 
-  async function fetchBreedsListData() {
-    setIsFetching(true)
-    const breeds = await DogAPI.getAllBreeds()
-    setBreedsList(breeds)
-    setIsFetching(false)
-  }
-
   useEffect(() => {
-    fetchBreedsListData()
-  }, [])
-
-  useEffect(() => {
-    if (!breedsList && !breedFilterList.length) return
+    if (!breedFilterList.length) return
 
     async function fetchBreedsImageList() {
-      const imageList = await DogAPI.fetchBreedListImages(breedFilterList)
-      setSelectedBreedsPhotoList(imageList)
+      try {
+        const data = await queryClient.fetchQuery({
+          queryKey: ['breedFilterList', breedFilterList],
+          queryFn: () => DogAPI.fetchBreedListImages(breedFilterList),
+        })
+
+        setSelectedBreedsPhotoList(data)
+      } catch (err) {
+        console.error(err)
+      }
     }
 
     fetchBreedsImageList()
-  }, [breedsList, breedFilterList])
+  }, [breedFilterList])
+
+  const { data, isPending, error } = useQuery({
+    queryKey: ['breedsData'],
+    queryFn: async (): Promise<BreedObject[]> => DogAPI.getAllBreeds(),
+  })
+
+  useEffect(() => {
+    if (data) setBreedsList(data)
+  }, [data])
 
   const memoizedContextValues = useMemo(() => {
     function updateBreedsFilter(breedFilter: BreedObject[]) {
@@ -57,12 +64,13 @@ export default function Home() {
     <HomeWrapper>
       <HomeContext.Provider value={memoizedContextValues}>
         <BreedFilterMenu />
-        {!isFetching && breedFilterList.length >= 1 ? (
+        {!isPending && <h1>{}</h1>}
+        {!isPending && !error && breedFilterList.length >= 1 ? (
           <PhotoGrid breedsPhotoList={selectedBreedsPhotoList} />
         ) : (
           <EmptyStateWrapper>
             <div className="emptyStateIcon">
-              {isFetching ? (
+              {isPending ? (
                 <PawPrint size={128} className="breathing" />
               ) : (
                 <Dog size={128} />
@@ -70,7 +78,7 @@ export default function Home() {
             </div>
 
             <div className="emptyStateMessage">
-              {isFetching ? (
+              {isPending ? (
                 <span>Fetch!-ing</span>
               ) : (
                 <span>
