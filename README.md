@@ -31,7 +31,7 @@ To run this project locally, follow these steps:
 
 3. Setup Dog CEO API URL in .env file. You can set it up following the example in `.env.example`
 
-`REACT_APP_DOG_API_BASEURL=<apiurl>`
+`REACT_APP_DOG_API_BASEURL=https://dog.ceo/api/`
 
 4. Install dependencies
 
