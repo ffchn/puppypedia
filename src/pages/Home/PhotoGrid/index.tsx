@@ -28,6 +28,7 @@ export default function PhotoGrid({ breedsPhotoList }: PhotoGridProps) {
         {breedsPhotoList.map((item: BreedPhotoItemObject, index) => (
           <PhotoGridItem
             photoUrl={item.photoUrl}
+            // disabling following rule as we dont have unique IDs for now
             // eslint-disable-next-line react/no-array-index-key
             key={index}
             onClick={() => handleToggleModal(item.photoUrl)}

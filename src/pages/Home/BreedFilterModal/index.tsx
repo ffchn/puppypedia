@@ -1,11 +1,4 @@
-import {
-  FormEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { FormEvent, useCallback, useContext, useEffect, useState } from 'react'
 import { Dog } from 'phosphor-react'
 import BreedFilterItem from '../BreedFilterItem'
 import Modal, { ModalProps } from '../../../components/Modal'
@@ -18,6 +11,7 @@ import {
 import { HomeContext } from '../HomeContext'
 import { BreedObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 import { BreedFilterSearchItem } from '../BreedFilterSearchItem'
+import useDebounce from '../../../hooks/useDebounce'
 
 export default function BreedFilterModal({
   isOpen,
@@ -28,6 +22,7 @@ export default function BreedFilterModal({
     useContext(HomeContext)
 
   const [selectedBreeds, setSelectedBreeds] = useState<BreedObject[]>([])
+  const [resultsList, setResultsList] = useState<BreedObject[]>([])
 
   function searchFormSubmit(e: FormEvent) {
     e.preventDefault()
@@ -63,14 +58,25 @@ export default function BreedFilterModal({
 
   const isSubmitDisabled = !selectedBreeds.length
 
-  const resultsList = useMemo(() => {
-    if (inputValue.length < 3) return []
-    const searchResults = breedsList.filter(
-      (breedItem) => breedItem.breed.includes(inputValue.toLowerCase()), // gets items from breedlist that contain string from inputValue
-    )
+  const { debouncing, debouncedValue } = useDebounce(inputValue)
 
-    return searchResults
-  }, [breedsList, inputValue])
+  const updateResultsList = useCallback(() => {
+    const search = debouncedValue.toLowerCase()
+    const filter: BreedObject[] =
+      debouncedValue.length < 3
+        ? []
+        : breedsList.filter(
+            (breedItem) =>
+              breedItem.breed.includes(search) ||
+              breedItem.subbreeds.find((subbreed) => subbreed.includes(search)), // gets items from breedlist that contain string in breed name or any subbreed
+          )
+
+    return setResultsList(filter)
+  }, [debouncedValue, breedsList])
+
+  useEffect(() => {
+    if (debouncedValue) updateResultsList()
+  }, [debouncedValue, updateResultsList])
 
   return (
     <Modal isOpen={isOpen} closeModalCallback={closeModalCallback}>
@@ -101,15 +107,17 @@ export default function BreedFilterModal({
           />
           <div className="searchResults">
             {inputValue.length >= 3 &&
-              (resultsList.length >= 1 ? (
+              (resultsList.length >= 1 && !debouncing ? (
                 <>
                   <h5>Breed search results:</h5>
 
                   <div className="resultsListWrapper">
-                    {resultsList.map((result) => (
+                    {resultsList.map((result, index) => (
                       <BreedFilterSearchItem
                         type="add"
-                        key={result.breed}
+                        // disabling following rule as we dont have unique IDs for now
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={result.breed + index}
                         breedData={result}
                         onClick={handleSelectBreedFilter}
                       />
@@ -120,7 +128,9 @@ export default function BreedFilterModal({
                 <BreedSearchNotFound>
                   <Dog size={24} />{' '}
                   <span>
-                    Oof! No results found for{' '}
+                    {debouncing
+                      ? 'Searching for '
+                      : 'Oof! No results found for '}
                     <strong>&quot;{inputValue}&quot;</strong>
                   </span>
                 </BreedSearchNotFound>

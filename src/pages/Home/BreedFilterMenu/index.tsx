@@ -40,6 +40,7 @@ export default function BreedFilterMenu() {
             breedFilterList.map((breed, index) => (
               <BreedFilterItem
                 type="remove"
+                // disabling following rule as we dont have unique IDs for now
                 // eslint-disable-next-line react/no-array-index-key
                 key={`filter-${breed}-${index}`}
                 breedData={breed}
