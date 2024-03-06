@@ -42,6 +42,7 @@ export default function Home() {
     fetchBreedsImageList()
   }, [breedFilterList])
 
+  // pre-fetches breedslist before mounting and caches it
   const { data, isPending, error } = useQuery({
     queryKey: ['breedsData'],
     queryFn: async (): Promise<BreedObject[]> => DogAPI.getAllBreeds(),
@@ -51,12 +52,12 @@ export default function Home() {
     if (data) setBreedsList(data)
   }, [data])
 
+  // memoized states and funcions in context so it doesnt re-render whole context consumers when not necessary
   const memoizedContextValues = useMemo(() => {
     function updateBreedsFilter(breedFilter: BreedObject[]) {
       setBreedFilterList(breedFilter)
     }
 
-    // memoized states so it doesnt re-render whole context when not necessary
     return { breedsList, breedFilterList, updateBreedsFilter }
   }, [breedsList, breedFilterList])
 
@@ -64,7 +65,6 @@ export default function Home() {
     <HomeWrapper>
       <HomeContext.Provider value={memoizedContextValues}>
         <BreedFilterMenu />
-        {!isPending && <h1>{}</h1>}
         {!isPending && !error && breedFilterList.length >= 1 ? (
           <PhotoGrid breedsPhotoList={selectedBreedsPhotoList} />
         ) : (
@@ -85,7 +85,7 @@ export default function Home() {
                   <i>oof! </i>
                   <br />
                   <br />
-                  No results found. Try updating the filters!
+                  No images found. Try updating the filters!
                 </span>
               )}
             </div>

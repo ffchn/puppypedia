@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { Button } from '../../../components/Button'
 import { BreedFilterMenuWrapper } from './styles'
 import BreedFilterModal from '../BreedFilterModal'
@@ -10,16 +10,19 @@ export default function BreedFilterMenu() {
   const [isModalOpen, setModalOpen] = useState<boolean>(false)
   const { breedFilterList, updateBreedsFilter } = useContext(HomeContext)
 
-  function handleToggleModal() {
+  const handleToggleModal = useCallback(() => {
     setModalOpen(!isModalOpen)
-  }
+  }, [setModalOpen, isModalOpen])
 
-  function removeFilter(breedFilterToRemove: BreedObject) {
-    const updatedFilters = breedFilterList.filter(
-      (filter) => filter.breed !== breedFilterToRemove.breed,
-    )
-    updateBreedsFilter(updatedFilters)
-  }
+  const removeFilter = useCallback(
+    (breedFilterToRemove: BreedObject) => {
+      const updatedFilters = breedFilterList.filter(
+        (filter) => filter.breed !== breedFilterToRemove.breed,
+      )
+      updateBreedsFilter(updatedFilters)
+    },
+    [breedFilterList, updateBreedsFilter],
+  )
 
   return (
     <>

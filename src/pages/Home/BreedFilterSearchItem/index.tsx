@@ -35,8 +35,11 @@ export function BreedFilterSearchItem({
       </div>
       {breedData.subbreeds.length >= 1 && (
         <SubbreedItemListWrapper>
-          {breedData.subbreeds.map((breed) => (
+          {breedData.subbreeds.map((breed, index) => (
             <SubbreedFilterItemWrapper
+              // disabling this as we dont have unique IDs for objects
+              // eslint-disable-next-line react/no-array-index-key
+              key={breed + index}
               onClick={(e) => handleFilterItemCallback(e, breed)}
             >
               <span className="breed">{breed}</span>
