@@ -52,9 +52,9 @@ export default function BreedFilterModal({
     )
   }, [])
 
-  function handleChangeInput(e: FormEvent<HTMLInputElement>) {
+  const handleChangeInput = useCallback((e: FormEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value)
-  }
+  }, [])
 
   const isSubmitDisabled = !selectedBreeds.length
 
@@ -102,7 +102,7 @@ export default function BreedFilterModal({
           <h3>Search for {selectedBreeds.length >= 1 && 'another '} breed:</h3>
           <BreedSearchInput
             type="text"
-            onChange={(e) => handleChangeInput(e)}
+            onChange={handleChangeInput}
             value={inputValue}
           />
           <div className="searchResults">

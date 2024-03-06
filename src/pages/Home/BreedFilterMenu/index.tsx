@@ -28,13 +28,13 @@ export default function BreedFilterMenu() {
     <>
       <BreedFilterModal
         isOpen={isModalOpen}
-        closeModalCallback={() => handleToggleModal()}
+        closeModalCallback={handleToggleModal}
       />
       <BreedFilterMenuWrapper>
         <Button
           type="button"
           className="filterButton"
-          onClick={() => handleToggleModal()}
+          onClick={handleToggleModal}
         >
           Manage Breeds
         </Button>

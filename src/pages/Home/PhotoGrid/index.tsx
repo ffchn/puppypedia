@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { PhotoGridItemWraper, PhotoGridWrapper, PhotoItemModal } from './styles'
 import { BreedPhotoItemObject } from '../../../interfaces/BreedPhotoGridInterfaces'
 import Modal from '../../../components/Modal'
@@ -19,9 +19,10 @@ function PhotoGridItem({ photoUrl, onClick }: PhotoGridItemProps) {
 export default function PhotoGrid({ breedsPhotoList }: PhotoGridProps) {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
 
-  function handleToggleModal(selected: string | null) {
+  const handleToggleModal = useCallback((selected: string | null) => {
     setSelectedPhoto(selected)
-  }
+  }, [])
+
   return (
     <>
       <PhotoGridWrapper>
