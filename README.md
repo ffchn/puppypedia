@@ -27,7 +27,7 @@ To run this project locally, follow these steps:
 
 2. Navigate to cloned folder
 
-`cd react-dog-breed-gallery`
+`cd puppypedia`
 
 3. Setup Dog CEO API URL in .env file. You can set it up following the example in `.env.example`
 
